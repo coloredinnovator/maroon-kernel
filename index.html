@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maroon Kernel – First Light</title>
+  <style>
+    /* Inline token CSS – the engine will generate this dynamically later */
+    :root {
+      --maroon-base-palette-white: #ffffff;
+      --maroon-base-palette-blue-500: #3b82f6;
+      --maroon-base-palette-blue-600: #2563eb;
+      --maroon-base-palette-red-600: #dc2626;
+      --maroon-base-spacing-2: 8px;
+      --maroon-base-spacing-4: 16px;
+      --maroon-base-radius-md: 8px;
+      --maroon-base-typography-fontFamily-sans: Inter, system-ui, sans-serif;
+      --maroon-base-typography-fontSize-base: 1rem;
+      --maroon-base-typography-fontSize-sm: 0.875rem;
+      --maroon-base-typography-fontSize-lg: 1.125rem;
+      --maroon-semantic-intent-inform-color: var(--maroon-base-palette-blue-600);
+      --maroon-base-motion-duration-fast: 150ms;
+    }
+    body {
+      font-family: var(--maroon-base-typography-fontFamily-sans);
+      padding: var(--maroon-base-spacing-8, 32px);
+    }
+  </style>
+</head>
+<body>
+  <h1>Maroon Kernel – Button Primitive</h1>
+
+  <maroon-button variant="filled">Filled Button</maroon-button>
+  <maroon-button variant="outlined">Outlined Button</maroon-button>
+  <maroon-button variant="ghost">Ghost Button</maroon-button>
+  <maroon-button disabled>Disabled</maroon-button>
+
+  <script type="module">
+    // In a full setup, Qwik would bootstrap here. For now, we just define the Web Component.
+    // Claude: replace this with the Qwik loader or a simple Web Component wrapper.
+    class MaroonButton extends HTMLElement {
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `<style>
+          :host { display: inline-block; }
+          button { width: 100%; height: 100%; }
+          .maroon-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            border-radius: var(--maroon-base-radius-md, 8px);
+            font-family: var(--maroon-base-typography-fontFamily-sans, sans-serif);
+            font-size: var(--maroon-base-typography-fontSize-base, 1rem);
+            padding: var(--maroon-base-spacing-2, 8px) var(--maroon-base-spacing-4, 16px);
+            cursor: pointer;
+            transition: background-color var(--maroon-base-motion-duration-fast, 150ms), opacity var(--maroon-base-motion-duration-fast, 150ms);
+          }
+          .maroon-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+          .maroon-button.filled {
+            background-color: var(--maroon-semantic-intent-inform-color, #2563eb);
+            color: var(--maroon-base-palette-white, #ffffff);
+          }
+          .maroon-button.outlined {
+            background-color: transparent;
+            border-color: var(--maroon-semantic-intent-inform-color, #2563eb);
+            color: var(--maroon-semantic-intent-inform-color, #2563eb);
+          }
+          .maroon-button.ghost {
+            background-color: transparent;
+            border-color: transparent;
+            color: var(--maroon-semantic-intent-inform-color, #2563eb);
+          }
+        </style><button class="maroon-button ${this.getAttribute('variant') || 'filled'}" ${this.hasAttribute('disabled') ? 'disabled' : ''}><slot></slot></button>`;
+      }
+    }
+    customElements.define('maroon-button', MaroonButton);
+  </script>
+</body>
+</html>
