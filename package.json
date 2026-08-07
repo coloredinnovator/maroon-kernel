@@ -1,0 +1,36 @@
+{
+  "name": "@maroon/kernel",
+  "version": "0.1.0",
+  "description": "Maroon ecosystem frontend design system — CSS tokens and Qwik primitives.",
+  "type": "module",
+  "main": "./dist/index.qwik.mjs",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.qwik.mjs"
+    },
+    "./tokens/base.css": "./tokens/base.css",
+    "./tokens/base.json": "./tokens/base.json"
+  },
+  "files": [
+    "dist",
+    "tokens/base.css",
+    "tokens/base.json"
+  ],
+  "scripts": {
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "build:lib": "vite build --mode lib",
+    "build:types": "tsc",
+    "build": "npm run build:tokens && npm run build:lib && npm run build:types",
+    "dev": "npm run build:tokens && vite"
+  },
+  "peerDependencies": {
+    "@builder.io/qwik": ">=1.5.0"
+  },
+  "devDependencies": {
+    "@builder.io/qwik": "^1.9.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6"
+  }
+}
